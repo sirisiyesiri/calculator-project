@@ -71,10 +71,17 @@ public class Main {
                             System.out.println("계산 결과 : " + result);
                         } catch (ArithmeticException e) {   // ArithmeticException발생 시 계산 결과 출력X, 오류 메세지 출력
                             System.out.println(e.getMessage());
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
                         }
 
                         while(true) {
 //                            scanner.nextLine(); // scanner 비우기
+
+                            // continueAnswer의 입력 검증 과정 필요
+                            // 현재 y 이외의 모든 답은 그냥 while문을 빠져나가는 문제 존재
+                            // n 이외의 답을 입력하면 처리하는 과정 필요
+
                             System.out.print("기존 계산 결과를 이어서 계속하시겠습니까? (y/n) : ");
                             String continueAnswer = scanner.nextLine();
                             if(continueAnswer.equals("y")) {
@@ -100,6 +107,8 @@ public class Main {
                                     result = calculator.calculate(result, number2, operation);
                                     System.out.println("계산 결과 : " + result);
                                 } catch (ArithmeticException e) {   // ArithmeticException발생 시 계산 결과 출력X, 오류 메세지 출력
+                                    System.out.println(e.getMessage());
+                                } catch (IllegalArgumentException e) {
                                     System.out.println(e.getMessage());
                                 }
                             }
@@ -168,5 +177,17 @@ public class Main {
 
         // 조금 더 객체 지향적으로 한다면 scannermanager class를 만들어서 원하는 scanner 기능을 사용
         // ex) 해당 scanner 매서드는 어떤 exception을 처리하는지 등
+
+        // 1. index번호 관리 필요
+        // 2. 계산 결과가 오류가 났을 시, 이어서 계산하기 기능을 사용하지 못하게 바꿔야 할 것 같음
+        // 3. contiuneAnswer 입력 검증 필요
+        // 4. 현재 number1, number2를 따로 따로 받아서 따로따로 try-catch를 하고 있는데,
+        // 한 try-catch문에서 한 번에 입력받게 변경 필요 있음
+        // -> 각각 try-catch를 하면 한 변수는 입력되었는데 한 변수는 에러가 나서 쓰레기 값이 입력된 상태로 실행될 수 있음
+        // 5. 현재 index 범위 및 사이즈 체크 & list가 비어 있는지를 main에서만 하고 있는데,
+        // 이럴 경우 다른 사람들이 내 Calculator클래스를 사용할 시 list가 비어있는지, index범위 및 사이즈 체크가 되지 않음
+        // => index 범위 및 사이즈 체크 & list 비어있는지를 main이 아닌 Calculator 매서드에서 하게 바꿔야 할 필요 있음
+
+
     }
 }

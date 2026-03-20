@@ -11,7 +11,7 @@ public class Calculator {
     // 생성자
     
     // 기능
-    public int calculate(int num1, int num2, char operation) throws ArithmeticException{
+    public int calculate(int num1, int num2, char operation) throws ArithmeticException, IllegalArgumentException{
         switch(operation) {
             case '+':
                 result = num1 + num2;
@@ -33,9 +33,9 @@ public class Calculator {
                 result = num1 / num2;
                 break;
             default:
-                System.out.println("지원하지 않는 연산 기능입니다.");
                 arraylist.add((arraylist.size()+1) + ". 지원하지 않는 연산");
-                return result = 0;
+                throw new IllegalArgumentException("지원하지 않는 연산 기능입니다.");
+                // IllegalArgumentException은 잘못된 입력 시 Exception
         }
         arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation + " " + num2 + " = " + result);
         return result;
