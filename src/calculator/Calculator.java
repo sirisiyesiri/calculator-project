@@ -3,13 +3,12 @@ package calculator;
 import java.util.ArrayList;
 
 public class Calculator {
-    // 속성
     private int result;
     private ArrayList<String> arraylist = new ArrayList<>();
 
-    
+
     // 생성자
-    
+
     // 기능
     public int calculate(int num1, int num2, char operation) throws ArithmeticException, IllegalArgumentException{
         switch(operation) {
@@ -48,19 +47,11 @@ public class Calculator {
     }
 
     public void getSingleArrayList(int index) { // 계산 결과 리스트 단일 조회
-        if(index <0 || index >= arraylist.size()) {
-            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
-        } else {
-            System.out.println(arraylist.get(index));
-        }
+        System.out.println(arraylist.get(index));
     }
 
     public void setArrayList(int index, String element) {   // 계산 결과 수정
-        if(index <0 || index >= arraylist.size()) {
-            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
-        } else {
-            this.arraylist.set(index, element);
-        }
+        this.arraylist.set(index, element);
     }
 
     public void removeArrayList() { // 가장 먼저 저장된 계산 결과 삭제
@@ -73,4 +64,5 @@ public class Calculator {
     public int listSize() {
         return arraylist.size();
     }
+
 }
