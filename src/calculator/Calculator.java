@@ -48,15 +48,27 @@ public class Calculator {
     }
 
     public void getSingleArrayList(int index) { // 계산 결과 리스트 단일 조회
-        System.out.println(arraylist.get(index));
+        if(index <0 || index >= arraylist.size()) {
+            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
+        } else {
+            System.out.println(arraylist.get(index));
+        }
     }
 
     public void setArrayList(int index, String element) {   // 계산 결과 수정
-        this.arraylist.set(index, element);
+        if(index <0 || index >= arraylist.size()) {
+            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
+        } else {
+            this.arraylist.set(index, element);
+        }
     }
 
     public void removeArrayList() { // 가장 먼저 저장된 계산 결과 삭제
-        arraylist.remove(0);
+        if(arraylist.size() == 0) {
+            throw new IllegalArgumentException("리스트가 비어 있어 삭제할 수 없습니다.");
+        } else {
+            arraylist.remove(0);
+        }
     }
     public int listSize() {
         return arraylist.size();
