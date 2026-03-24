@@ -13,17 +13,18 @@ public class Calculator {
     public int calculate(int num1, int num2, OperatorType operation){
         try {
             result = operation.apply(num1, num2);
-            arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation.getOperator() + " " + num2 + " = " + result);
+            arraylist.add(num1 + " " + operation.getOperator() + " " + num2 + " = " + result);
             return result;
         } catch (ArithmeticException e) {
-            arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation.getOperator() + " " + num2 + " = " + "계산 불가");
+            arraylist.add(num1 + " " + operation.getOperator() + " " + num2 + " = " + "계산 불가");
             throw e;
         }
     }
 
     public void getArrayList() {   // 계산 결과 전체 조회
         for(String list : arraylist) {
-            System.out.println(list);
+            int i = 1;
+            System.out.println(i++ + ". " + list);
         }
     }
 
