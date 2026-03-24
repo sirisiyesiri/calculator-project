@@ -20,12 +20,19 @@ public class ScannerManager{
         }
     }
 
-    public char inputOperator() {
+    public OperatorType inputOperator() throws IllegalArgumentException {
         while (true) {
             try {
                 System.out.print("계산 기호를 입력해주세요.(+, -, *, /) : ");
                 char operator = scanner.nextLine().charAt(0);
-                return operator;
+                switch(operator) {
+                    case '+' : return OperatorType.ADD;
+                    case '-' : return OperatorType.SUB;
+                    case '*' : return OperatorType.MUL;
+                    case '/' : return OperatorType.DIV;
+                    default:
+                        throw new IllegalArgumentException("지원하지 않는 연산 기능 입니다.");
+                }
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("입력이 비어 있습니다.");
             }

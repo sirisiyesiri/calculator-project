@@ -10,34 +10,15 @@ public class Calculator {
     // 생성자
 
     // 기능
-    public int calculate(int num1, int num2, char operation) throws ArithmeticException, IllegalArgumentException{
-        switch(operation) {
-            case '+':
-                result = num1 + num2;
-                break;
-            case '-':
-                result = num1 - num2;
-                break;
-            case '*':
-                result = num1 * num2;
-                break;
-            case '/':
-                if(num2 == 0) {
-                    arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation + " " + num2 + " = 계산 불가");
-                    throw new ArithmeticException("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
-                    // 처음엔 exception이 나지 않기 위해서 여기서 try-catch를 하고, result = 0;을 return하게 코드를 짰었음
-                    // 근데 그러니까 main에서 계산 불가임에도 불구하고, '계산 결과 : 0'으로 출력되며, 원하는 출력이 나오지 않게 됨
-                    // 튜터님께 여쭤보니 차라리 exception을 발생시키고 throws를 이용해서 main에서 exception을 처리하라는 답을 주심
-                }
-                result = num1 / num2;
-                break;
-            default:
-                arraylist.add((arraylist.size()+1) + ". 지원하지 않는 연산");
-                throw new IllegalArgumentException("지원하지 않는 연산 기능입니다.");
-                // IllegalArgumentException은 잘못된 입력 시 Exception
+    public int calculate(int num1, int num2, OperatorType operation){
+        try {
+            result = operation.apply(num1, num2);
+            arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation.getOperator() + " " + num2 + " = " + result);
+            return result;
+        } catch (ArithmeticException e) {
+            arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation.getOperator() + " " + num2 + " = " + "계산 불가");
+            throw e;
         }
-        arraylist.add((arraylist.size()+1) + ". " + num1 + " " + operation + " " + num2 + " = " + result);
-        return result;
     }
 
     public void getArrayList() {   // 계산 결과 전체 조회
@@ -59,6 +40,9 @@ public class Calculator {
             throw new IllegalArgumentException("리스트가 비어 있어 삭제할 수 없습니다.");
         } else {
             arraylist.remove(0);
+            for(String list : arraylist) {
+
+            }
         }
     }
     public int listSize() {

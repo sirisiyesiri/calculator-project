@@ -1,7 +1,6 @@
 package calculator;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +8,7 @@ public class Main {
         Calculator calculator = new Calculator();
         int number1 = 0;
         int number2 = 0;
-        char operation = ' ';
+        OperatorType operation;
         int result = 0;
         int index;
         int indexCount;
@@ -38,7 +37,12 @@ public class Main {
                         number1 = scannerManager.inputNumber();
                         System.out.print("두 번째 수를 입력해주세요 : ");
                         number2 = scannerManager.inputNumber();
-                        operation = scannerManager.inputOperator();
+                        try {
+                            operation = scannerManager.inputOperator();
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                            continue;
+                        }
 
                         try{
                             result = calculator.calculate(number1, number2, operation);
@@ -46,23 +50,23 @@ public class Main {
                             System.out.println();
 
                             while(true) {
-//                            scanner.nextLine(); // scanner 비우기
 
                                 System.out.print("기존 계산 결과를 이어서 계속하시겠습니까? (y/n) : ");
                                 String continueAnswer = scannerManager.inputAnswer();
                                 if(continueAnswer.equals("y") || continueAnswer.equals("Y")) {
                                     System.out.print("두 번째 수를 입력해주세요 : ");
                                     number2 = scannerManager.inputNumber();
-                                    operation = scannerManager.inputOperator();
+                                    try {
+                                        operation = scannerManager.inputOperator();
+                                    } catch(IllegalArgumentException e) {
+                                        System.out.println(e.getMessage());
+                                    }
 
                                     try{
                                         result = calculator.calculate(result, number2, operation);
                                         System.out.println("계산 결과 : " + result);
                                         System.out.println();
                                     } catch (ArithmeticException e) {   // ArithmeticException발생 시 계산 결과 출력X, 오류 메세지 출력
-                                        System.out.println(e.getMessage());
-                                        break;  // 오류가 났을 경우 이어서 계산하기 못하게 하기 위함
-                                    } catch (IllegalArgumentException e) {
                                         System.out.println(e.getMessage());
                                         break;  // 오류가 났을 경우 이어서 계산하기 못하게 하기 위함
                                     }
@@ -74,9 +78,6 @@ public class Main {
                                 }
                             }
                         } catch (ArithmeticException e) {   // ArithmeticException발생 시 계산 결과 출력X, 오류 메세지 출력
-                            System.out.println(e.getMessage());
-                            break;  // 오류가 났을 경우 이어서 계산하기 못하게 하기 위함
-                        } catch (IllegalArgumentException e) {  // 지원하지 않는 계산 기호 입력 시 계산 결과 출력X, 오류 메시지 출력
                             System.out.println(e.getMessage());
                             break;  // 오류가 났을 경우 이어서 계산하기 못하게 하기 위함
                         }
