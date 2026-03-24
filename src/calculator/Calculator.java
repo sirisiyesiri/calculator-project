@@ -21,9 +21,9 @@ public class Calculator {
         }
     }
 
-    public void getArrayList() {   // 계산 결과 전체 조회
+    public void getArrayList() {// 계산 결과 전체 조회
+        int i = 1;
         for(String list : arraylist) {
-            int i = 1;
             System.out.println(i++ + ". " + list);
         }
     }
