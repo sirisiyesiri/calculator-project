@@ -5,9 +5,9 @@ import java.util.InputMismatchException;
 public class Main {
     public static void main(String[] args) {
         ScannerManager scannerManager = new ScannerManager();
-        HistoryList historyList = new HistoryList();
-        Calculator<Integer> calculatorInt = new Calculator<>(historyList);
-        Calculator<Double> calculatorDouble = new Calculator<>(historyList);
+        HistoryList resultList = new HistoryList();
+        Calculator<Integer> calculatorInt = new Calculator<>(resultList);
+        Calculator<Double> calculatorDouble = new Calculator<>(resultList);
         Number number1 = 0;
         Number number2 = 0;
         OperatorType operation;
@@ -28,7 +28,7 @@ public class Main {
             System.out.println("3. 계산 결과 단일 조회");
             System.out.println("4. 계산 결과 수정");
             System.out.println("5. 계산 결과 삭제");
-
+            System.out.println("6. 특정 값보다 큰 결과 조회");
 
             System.out.println();
             System.out.print("선택 : ");
@@ -120,23 +120,23 @@ public class Main {
                     }
                     break;
                 case 2:
-                    historyList.getArrayList();
+                    resultList.getArrayList();
                     break;
                 case 3:
                     try {
-                        indexCount = historyList.listSize();
+                        indexCount = resultList.listSize();
                         index = scannerManager.inputIndex("조회", indexCount);
-                        historyList.getSingleArrayList(index-1);
+                        resultList.getSingleArrayList(index-1);
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 4:
                     try {
-                        indexCount = historyList.listSize();
+                        indexCount = resultList.listSize();
                         index = scannerManager.inputIndex("수정", indexCount);
                         String correction = scannerManager.inputCorrection();
-                        historyList.setArrayList(index-1, correction);
+                        resultList.setArrayList(index-1, correction);
                         System.out.println(index + "번 째 계산 결과가 수정되었습니다.");
                     } catch(IllegalArgumentException e) {
                         System.out.println(e.getMessage());
@@ -144,11 +144,17 @@ public class Main {
                     break;
                 case 5:
                     try {
-                        historyList.removeArrayList();
+                        resultList.removeArrayList();
                         System.out.println("1번 째 계산 결과가 삭제되었습니다.");
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
+                case 6:
+                    System.out.print("기준값 입력 : ");
+                    Number input = scannerManager.inputNumber();
+
+                    resultList.biggerThenInput(input);
                     break;
                 default:
                     System.out.println("잘못된 입력입니다.");

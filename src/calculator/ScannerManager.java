@@ -26,12 +26,9 @@ public class ScannerManager{
                     try {
                         return Double.parseDouble(number);
                     } catch (NumberFormatException ex) {
-                        System.out.println("잘못된 입력입니다. 숫자를 입력해주세요 : ");
+                        System.out.print("잘못된 입력입니다. 숫자를 입력해주세요 : ");
                     }
                 }
-
-                System.out.println("입력값: [" + number + "]");
-
 //                return num1;
             } catch (NumberFormatException e) {
                 System.out.print("잘못된 입력입니다. 정수를 입력해주세요. : ");
@@ -80,7 +77,7 @@ public class ScannerManager{
     }
 
     public String inputCorrection() {
-        System.out.print("수정 값 ((ex) 1. 1 + 1 = 2) : ");
+        System.out.print("수정 값 ((ex) 1 + 1 = 2) : ");
         String correction = scanner.nextLine();
         return correction;
     }

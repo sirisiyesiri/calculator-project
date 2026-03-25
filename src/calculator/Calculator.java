@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Calculator <T extends Number>{
     private Number result;
     private String list;
-    HistoryList historyList = new HistoryList();
+    HistoryList resultList = new HistoryList();
 
 
     // 생성자
-    public Calculator(HistoryList historyList) {
-        this.historyList = historyList;
+    public Calculator(HistoryList resultList) {
+        this.resultList = resultList;
     }
 
     // 기능
@@ -24,13 +24,12 @@ public class Calculator <T extends Number>{
                 result = operation.applyInt(num1.intValue(), num2.intValue());
             }
             list = (num1 + " " + operation.getOperator() + " " + num2 + " = " + result);
-            historyList.addList(list);
-            historyList.addResultList(result.doubleValue());
+            resultList.addList(list, result, false);
             return result;
         } catch (ArithmeticException e) {
             // Calculator 클래스에 존재하는 arraylist에 계산 결과를 저장하기 위해 catch를 진행함.
             list = (num1 + " " + operation.getOperator() + " " + num2 + " = " + "계산 불가");
-            historyList.addList(list);
+            resultList.addList(list, null, true);
             throw e;    // 계산 결과만 저장하고, 예외는 main에서 잡을 거라서 throw함.
         }
     }
