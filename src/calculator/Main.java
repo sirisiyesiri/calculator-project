@@ -5,15 +5,20 @@ import java.util.InputMismatchException;
 public class Main {
     public static void main(String[] args) {
         ScannerManager scannerManager = new ScannerManager();
-        Calculator calculator = new Calculator();
-        int number1 = 0;
-        int number2 = 0;
+        HistoryList historyList = new HistoryList();
+        Calculator<Integer> calculatorInt = new Calculator<>(historyList);
+        Calculator<Double> calculatorDouble = new Calculator<>(historyList);
+        Number number1 = 0;
+        Number number2 = 0;
         OperatorType operation;
-        int result = 0;
+        double resultDouble = 0;
+        int resultInt = 0;
+        Number result = 0;
         int index;
         int indexCount;
 
         System.out.println("=== Java 계산기 ===");
+
 
         while(true) {
 
@@ -27,7 +32,9 @@ public class Main {
 
             System.out.println();
             System.out.print("선택 : ");
-            int choice = scannerManager.inputNumber();
+            int choice = (Integer)scannerManager.inputNumber();
+            // inputNumber 함수에서 Double 인지 Integer인지 구분하는 코드가 안 먹어서 전부 Double타입으로 반환되는 오류가 났었음...
+            // Double -> Integer는 불가능 했기 때문에 .intValues()함수를 이용 했었는데 해당 코드를 손 봐서 캐스팅이 됨.
 
 
             switch(choice) {
@@ -45,7 +52,21 @@ public class Main {
                         }
 
                         try{
-                            result = calculator.calculate(number1, number2, operation);
+                            if(number1 instanceof Double && number2 instanceof Double) {
+                                // calculate함수의 매개변수 형이 Double인데(제네릭이니까 생성자 제네릭 타입에 따라감), number1, number2는 Object니까 다운 캐스팅 필요함.
+                                resultDouble = (double)calculatorDouble.calculate((Double)number1, (Double) number2, operation);
+                                result = resultDouble;
+                            } else if(number1 instanceof Double && number2 instanceof Integer) {
+                                resultDouble = (double)calculatorDouble.calculate((Double)number1,number2, operation);
+                                result = resultDouble;
+                            } else if(number1 instanceof Integer && number2 instanceof Double) {
+                                resultInt = (int)calculatorInt.calculate((Integer) number1, number2, operation);
+                                result = resultInt;
+                            }
+                            else {
+                                resultInt = (int)calculatorInt.calculate((Integer) number1, (Integer) number2, operation);
+                                result = resultInt;
+                            }
                             System.out.println("계산 결과 : " + result);
                             System.out.println();
 
@@ -63,7 +84,21 @@ public class Main {
                                     }
 
                                     try{
-                                        result = calculator.calculate(result, number2, operation);
+                                        if(result instanceof Double && number2 instanceof Double) {
+                                            // calculate함수의 매개변수 형이 Double인데(제네릭이니까 생성자 제네릭 타입에 따라감), number1, number2는 Object니까 다운 캐스팅 필요함.
+                                            resultDouble = (double)calculatorDouble.calculate((Double)result, (Double) number2, operation);
+                                            result = resultDouble;
+                                        } else if(result instanceof Double && number2 instanceof Integer) {
+                                            resultDouble = (double)calculatorDouble.calculate((Double)result,number2, operation);
+                                            result = resultDouble;
+                                        } else if(result instanceof Integer && number2 instanceof Double) {
+                                            resultDouble = (double)calculatorInt.calculate((Integer) result, number2, operation);
+                                            result = resultDouble;
+                                        }
+                                        else {
+                                            resultInt = (int)calculatorInt.calculate((Integer) result, (Integer) number2, operation);
+                                            result = resultInt;
+                                        }
                                         System.out.println("계산 결과 : " + result);
                                         System.out.println();
                                     } catch (ArithmeticException e) {   // ArithmeticException발생 시 계산 결과 출력X, 오류 메세지 출력
@@ -85,23 +120,23 @@ public class Main {
                     }
                     break;
                 case 2:
-                    calculator.getArrayList();
+                    historyList.getArrayList();
                     break;
                 case 3:
                     try {
-                        indexCount = calculator.listSize();
+                        indexCount = historyList.listSize();
                         index = scannerManager.inputIndex("조회", indexCount);
-                        calculator.getSingleArrayList(index-1);
+                        historyList.getSingleArrayList(index-1);
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 4:
                     try {
-                        indexCount = calculator.listSize();
+                        indexCount = historyList.listSize();
                         index = scannerManager.inputIndex("수정", indexCount);
                         String correction = scannerManager.inputCorrection();
-                        calculator.setArrayList(index-1, correction);
+                        historyList.setArrayList(index-1, correction);
                         System.out.println(index + "번 째 계산 결과가 수정되었습니다.");
                     } catch(IllegalArgumentException e) {
                         System.out.println(e.getMessage());
@@ -109,7 +144,7 @@ public class Main {
                     break;
                 case 5:
                     try {
-                        calculator.removeArrayList();
+                        historyList.removeArrayList();
                         System.out.println("1번 째 계산 결과가 삭제되었습니다.");
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());

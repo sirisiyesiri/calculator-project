@@ -6,14 +6,33 @@ import java.util.Scanner;
 public class ScannerManager{
     Scanner scanner = new Scanner(System.in);
 
-    public int inputNumber() {
+    public Number inputNumber() {
         while(true) {
             try {
-                int num1 = Integer.parseInt(scanner.nextLine());    // scanner.nextLine()로 입력받은 문자열('\n' 포함)을 숫자로 변환 시켜주는 함수
+                // trim() : 문자열 앞 뒤의 공백을 지워주는 함수
+                String number = scanner.nextLine().trim();
+//                Number num1 = number.contains(".")? Double.parseDouble(number) : Integer.parseInt(number);
                 // scanner 비우기를 위한 scanner.nextLine()이 어떨 때는 enter를 쳐야되고,
                 // 어떨 때는 그냥 버퍼 비우기 기능만 실행되고, 왔다갔다 해서
                 // 버퍼 처리 필요 없는 함수 사용함
-                return num1;
+
+                // 이 미친 것이 입력 받은 String에 '.'이 포함되면 Double타입으로, 포함 X이면 Integer로 저장하라고 했는데
+                // 지 맘대로 Double 타입으로 저장하는 문제 발생...
+                // 그래서 형 결정 방식을 바꿔볼려고 함.
+
+                try {
+                    return Integer.parseInt(number);
+                } catch (NumberFormatException e) {
+                    try {
+                        return Double.parseDouble(number);
+                    } catch (NumberFormatException ex) {
+                        System.out.println("잘못된 입력입니다. 숫자를 입력해주세요 : ");
+                    }
+                }
+
+                System.out.println("입력값: [" + number + "]");
+
+//                return num1;
             } catch (NumberFormatException e) {
                 System.out.print("잘못된 입력입니다. 정수를 입력해주세요. : ");
             }

@@ -6,25 +6,46 @@ public enum OperatorType {
     ADD('+') {
         // 추상 매서드 Override 해 놓은 것임.
         @Override
-        public int apply(int a, int b) {
+        public int applyInt(int a, int b) {
+            return a + b;
+        }
+
+        @Override
+        public double applyDouble(double a, double b) {
             return a + b;
         }
     },
     SUB('-') {
         @Override
-        public int apply(int a, int b) {
+        public int applyInt(int a, int b) {
+            return a - b;
+        }
+
+        @Override
+        public double applyDouble(double a, double b) {
             return a - b;
         }
     },
     MUL('*') {
         @Override
-        public int apply(int a, int b) {
+        public int applyInt(int a, int b) {
+            return a * b;
+        }
+
+        @Override
+        public double applyDouble(double a, double b) {
             return a * b;
         }
     },
     DIV('/') {
         @Override
-        public int apply(int a, int b) {
+        public int applyInt(int a, int b) {
+            if(b == 0) throw new ArithmeticException("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
+            return a / b;
+        }
+
+        @Override
+        public double applyDouble(double a, double b) {
             if(b == 0) throw new ArithmeticException("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
             return a / b;
         }
@@ -42,6 +63,8 @@ public enum OperatorType {
     }
 
     // 추상 매서드 : 구현X but, 자식 클래스는 매서드 구현 강제
-    public abstract int apply (int a, int b);
+    public abstract double applyDouble (double a, double b);
+    public abstract int applyInt (int a, int b);
 
 }
+
