@@ -12,13 +12,7 @@ public class ScannerManager{
                 // trim() : 문자열 앞 뒤의 공백을 지워주는 함수
                 String number = scanner.nextLine().trim();
 //                Number num1 = number.contains(".")? Double.parseDouble(number) : Integer.parseInt(number);
-                // scanner 비우기를 위한 scanner.nextLine()이 어떨 때는 enter를 쳐야되고,
-                // 어떨 때는 그냥 버퍼 비우기 기능만 실행되고, 왔다갔다 해서
-                // 버퍼 처리 필요 없는 함수 사용함
-
-                // 이 미친 것이 입력 받은 String에 '.'이 포함되면 Double타입으로, 포함 X이면 Integer로 저장하라고 했는데
-                // 지 맘대로 Double 타입으로 저장하는 문제 발생...
-                // 그래서 형 결정 방식을 바꿔볼려고 함.
+                // 처음에 위에와 같이 코드를 썼는데 왜인지 모르지만 타입 구분이 안되고, 다 Double로 return이 되어서 아래와 같이 타입구분 방식을 변경함.
 
                 try {
                     return Integer.parseInt(number);
