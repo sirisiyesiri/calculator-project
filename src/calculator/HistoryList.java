@@ -25,11 +25,9 @@ public class HistoryList {
         String resultStr = parts[1].trim();
 
         Number resultElement;
-        boolean tf = true;
 
         if(resultStr.equals("계산 불가")) {
             resultElement = null;
-            tf = false;
         } else {
             if(resultStr.contains(".")) {
                 resultElement = Double.parseDouble(resultStr);
@@ -38,7 +36,7 @@ public class HistoryList {
             }
         }
 
-        CalculatorResult correctionlist = new CalculatorResult(strElement, resultElement, tf);
+        CalculatorResult correctionlist = new CalculatorResult(strElement, resultElement);
 
 
         this.arraylist.set(index, correctionlist);
@@ -55,8 +53,8 @@ public class HistoryList {
         return arraylist.size();
     }
 
-    public void addList(String list, Number result, boolean fail) {
-        CalculatorResult addlist = new CalculatorResult(list, result, fail);
+    public void addList(String list, Number result) {
+        CalculatorResult addlist = new CalculatorResult(list, result);
         arraylist.add(addlist);
     }
 

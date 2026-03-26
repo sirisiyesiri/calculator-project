@@ -24,12 +24,12 @@ public class Calculator <T extends Number>{
                 result = operation.applyInt(num1.intValue(), num2.intValue());
             }
             list = (num1 + " " + operation.getOperator() + " " + num2 + " = " + result);
-            resultList.addList(list, result, false);
+            resultList.addList(list, result);
             return result;
         } catch (ArithmeticException e) {
             // Calculator 클래스에 존재하는 arraylist에 계산 결과를 저장하기 위해 catch를 진행함.
             list = (num1 + " " + operation.getOperator() + " " + num2 + " = " + "계산 불가");
-            resultList.addList(list, null, true);
+            resultList.addList(list, null);
             throw e;    // 계산 결과만 저장하고, 예외는 main에서 잡을 거라서 throw함.
         }
     }
